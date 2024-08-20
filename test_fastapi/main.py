@@ -13,19 +13,15 @@ app.add_middleware(
 )
 
 @app.post("/classification")
-async def text_class(review: str = Form()):
+async def text_class(review: str = Form(...)):
     print(f"review: {review}")
-
-    # try:
-    #     review = review.encode('latin1').decode('utf-8')
-    # except UnicodeEncodeError:
-    #     pass
-
-    # print(f"Converted review: {review}")
     
     # 추론 수행
     result = text_classification(review)
+    print(result)
     return result
 
-
 #fastapi dev main.py --port 8007
+
+#pip freeze > requirements.txt
+#pip install -r requirements.txt

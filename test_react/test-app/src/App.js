@@ -13,11 +13,17 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8081/classify', {
-        review: review
+      const formData = new FormData();
+      formData.append('review', review);
+  
+      const response = await axios.post('http://localhost:8007/classification', formData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       });
+  
       setResult(response.data.result);
-      console.log(review)
+      console.log(review);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -38,7 +44,7 @@ function App() {
       {result && (
         <div>
           <p>
-            Label: {result.label === '0' ? '😢' : '😊'}
+            Label: {result.label === 'LABEL_0' ? '😢' : '😊'}
           </p>
           <p>Score: {result.score}</p>
         </div>
